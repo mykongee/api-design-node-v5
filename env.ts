@@ -45,9 +45,15 @@ try {
   if (e instanceof z.ZodError) {
     console.log('invalid env var');
     console.error(JSON.stringify(e.flatten().fieldErrors, null, 2));
+    
+    e.issues.forEach((err) => {
+      const path = err.path.join('.');
+      console.log(`${path}: ${err.message}`);
+    });
+    process.exit(1);
   }
 
-  process.exit(1);
+  throw e;
 }
 
 export const isProd = () => env.APP_STAGE === 'production';
