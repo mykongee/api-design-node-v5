@@ -3,7 +3,6 @@ import { env } from '../env.ts'; // just to save trouble of typing out process.e
 import { app } from './server.ts';
 // import 'dotenv/config'; // loads .env file when module is imported.
 
-console.log(env.PORT);
 app.listen(env.PORT, () => {
     console.log(env.PORT);
     console.log('server is started');
