@@ -6,6 +6,7 @@ import { z } from 'zod';
 
 // process.env.APP_STAGE = process.env.APP_STAGE || 'dev';
 // ** REMEMBER TO CHECK THIS FIRST SO U ACTUALLY KNOW WHAT ENV YOU'RE USING ** 
+console.log('loaded env.ts')
 process.env.APP_STAGE = 'dev';
 
 const isProduction = process.env.APP_STAGE === 'production';
@@ -13,7 +14,7 @@ const isDevelopment = process.env.APP_STAGE === 'development' || process.env.APP
 const isTesting = process.env.APP_STAGE === 'test';
 
 if (isDevelopment) {
-  loadEnv();
+  loadEnv('dev');
 } else if (isTesting) {
   loadEnv('test');
 } else {
@@ -24,8 +25,8 @@ if (isDevelopment) {
 // very neat stuff! but verbose lol
 // but this is something a devEx team would work on
 const envSchema = z.object({
-  NODE_ENV: z.enum(['development','test', 'dev', 'production']).default('development'),
-  APP_STAGE: z.enum(['development','test', 'dev', 'production']).default('dev'),
+  NODE_ENV: z.enum(['development', 'test', 'dev', 'production']).default('development'),
+  APP_STAGE: z.enum(['development', 'test', 'dev', 'production']).default('dev'),
   // PORT: z.number('3000')
   PORT: z.coerce.number().positive().default(3000), // wtf is this why is it so verbose
   DATABASE_URL: z.string().startsWith('postgresql://'),
@@ -45,7 +46,7 @@ try {
   if (e instanceof z.ZodError) {
     console.log('invalid env var');
     console.error(JSON.stringify(e.flatten().fieldErrors, null, 2));
-    
+
     e.issues.forEach((err) => {
       const path = err.path.join('.');
       console.log(`${path}: ${err.message}`);
