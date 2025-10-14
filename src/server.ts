@@ -14,6 +14,11 @@ app.get('/health', (req, res) => {
 //@idea: neat project? make tool or something that monitors uptime and server health
 //@idea: project : convert to biomejs after eslint
 
+app.post('/cake', (req, res) => {
+    
+});
+
+
 export { app }; // allows named import in case it's needed later. gives more options
 
 export default app;
