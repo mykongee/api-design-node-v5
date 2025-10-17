@@ -27,6 +27,7 @@ if (isDevelopment) {
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'dev', 'production']).default('development'),
   APP_STAGE: z.enum(['development', 'test', 'dev', 'production']).default('dev'),
+  ALLOWED_ORIGINS: z.string(),
   // PORT: z.number('3000')
   PORT: z.coerce.number().positive().default(3000), // wtf is this why is it so verbose
   DATABASE_URL: z.string().startsWith('postgresql://'),
